@@ -20,7 +20,7 @@ public class ObservableEntityListener {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ObservableEntityListener.class);
 
-    protected static Class getMaritalStatusChangeObserverClass() throws ClassNotFoundException {
+    static Class getMaritalStatusChangeObserverClass() throws ClassNotFoundException {
         String maritalStatusChangeObserverClassName =
                 PersonAppProperties.getInstance().getProperty(MARITAL_STATUS_CHANGE_OBSERVER_CLASS);
 
@@ -31,9 +31,7 @@ public class ObservableEntityListener {
     public void addObserver(Object object) {
         if (object instanceof Observable) {
             Observable observable = (Observable) object;
-            for (Observer<Observable> observer : getObservers()) {
-                observable.registerObserver(observer);
-            }
+            getObservers().forEach(observable::registerObserver);
         }
     }
 

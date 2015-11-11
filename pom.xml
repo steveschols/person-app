@@ -14,6 +14,7 @@
         <module>person-app-service-impl</module>
         <module>person-app-common</module>
         <module>person-app-test</module>
+        <module>person-app-web</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -99,6 +100,18 @@
                 <version>3.4.0.GA</version>
                 <scope>runtime</scope>
             </dependency>
+
+            <dependency>
+                <groupId>javax.ejb</groupId>
+                <artifactId>ejb-api</artifactId>
+                <version>3.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>javax.servlet-api</artifactId>
+                <version>3.1.0</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -130,6 +143,12 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>1.10.19</version>
             <scope>test</scope>
         </dependency>
         <dependency>

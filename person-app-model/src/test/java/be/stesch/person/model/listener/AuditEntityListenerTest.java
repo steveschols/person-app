@@ -12,6 +12,7 @@ import org.unitils.orm.jpa.annotation.JpaEntityManagerFactory;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import static be.stesch.person.model.MaritalStatus.SINGLE;
 import static org.junit.Assert.assertNotNull;
 import static org.unitils.database.util.TransactionMode.ROLLBACK;
 
@@ -35,7 +36,7 @@ public class AuditEntityListenerTest {
 
     @Test
     public void testSetAuditDataOnPersist() throws Exception {
-        Person person = new Person("Test", "Person");
+        Person person = new Person("Test", "Person", SINGLE);
 
         entityManager.persist(person);
 

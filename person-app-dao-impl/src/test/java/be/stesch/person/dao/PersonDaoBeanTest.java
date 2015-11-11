@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 
 import static be.stesch.person.model.MaritalStatus.MARRIED;
+import static be.stesch.person.model.MaritalStatus.SINGLE;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.unitils.database.util.TransactionMode.ROLLBACK;
@@ -37,10 +38,8 @@ public class PersonDaoBeanTest {
 
     @Test
     public void testPersistPerson() throws Exception {
-        Person person = new Person("Test", "Person");
-
+        Person person = new Person("Test", "Person", SINGLE);
         personDao.persist(person);
-        //JpaUnitils.flushDatabaseUpdates();
 
         assertNotNull(person.getId());
     }
@@ -54,15 +53,17 @@ public class PersonDaoBeanTest {
                 ZoneId.systemDefault());
         assertEquals("Test", person.getFirstName());
         assertEquals("Person", person.getLastName());
-        assertEquals(MARRIED, person.getMaritalStatus());
+        assertEquals(SINGLE, person.getMaritalStatus());
         assertEquals(expectedCreationDate, actualCreationDate);
 
         person.setFirstName("John");
         person.setLastName("Doe");
+        person.setMaritalStatus(MARRIED);
         person = personDao.merge(person);
 
         assertEquals("John", person.getFirstName());
         assertEquals("Doe", person.getLastName());
+        assertEquals(MARRIED, person.getMaritalStatus());
         assertEquals(expectedCreationDate, actualCreationDate);
     }
 

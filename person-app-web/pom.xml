@@ -9,22 +9,35 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>person-app-service-api</artifactId>
+    <artifactId>person-app-web</artifactId>
+    <packaging>war</packaging>
 
     <dependencies>
         <dependency>
             <groupId>be.stesch</groupId>
-            <artifactId>person-app-common</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>be.stesch</groupId>
-            <artifactId>person-app-model</artifactId>
+            <artifactId>person-app-service-api</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+        </dependency>
         <dependency>
             <groupId>javax.ejb</groupId>
             <artifactId>ejb-api</artifactId>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

@@ -20,6 +20,11 @@
             <groupId>be.stesch</groupId>
             <artifactId>person-app-dao-api</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>javax.ejb</groupId>
+            <artifactId>ejb-api</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

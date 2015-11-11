@@ -4,6 +4,7 @@ import be.stesch.person.common.observer.Observable;
 import be.stesch.person.common.observer.Observer;
 import be.stesch.person.model.listener.AuditEntityListener;
 import be.stesch.person.model.listener.ObservableEntityListener;
+import be.stesch.person.model.listener.OriginalStateEntityListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -18,17 +19,20 @@ import static javax.persistence.EnumType.STRING;
  * @since 27/08/2015
  */
 @Entity
-@EntityListeners({AuditEntityListener.class, ObservableEntityListener.class})
+@EntityListeners({AuditEntityListener.class, OriginalStateEntityListener.class, ObservableEntityListener.class})
 public class Person implements Auditable, Observable, Serializable {
 
     @Id
     @GeneratedValue
     private Long id;
 
+    @Column(nullable = false)
     private String firstName;
 
+    @Column(nullable = false)
     private String lastName;
 
+    @Column(nullable = false)
     @Enumerated(STRING)
     private MaritalStatus maritalStatus;
 
@@ -37,14 +41,18 @@ public class Person implements Auditable, Observable, Serializable {
     private Date lastUpdateDate;
 
     @Transient
-    private List<Observer> observers = new ArrayList<>();
+    private MaritalStatus originalMaritalStatus;
+
+    @Transient
+    private final List<Observer> observers = new ArrayList<>();
 
     public Person() {
     }
 
-    public Person(String firstName, String lastName) {
+    public Person(String firstName, String lastName, MaritalStatus maritalStatus) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.maritalStatus = maritalStatus;
     }
 
     public Long getId() {
@@ -77,6 +85,10 @@ public class Person implements Auditable, Observable, Serializable {
 
     public void setMaritalStatus(MaritalStatus maritalStatus) {
         this.maritalStatus = maritalStatus;
+
+        if (maritalStatus != originalMaritalStatus) {
+            notifyObservers();
+        }
     }
 
     public Date getCreationDate() {
@@ -93,6 +105,14 @@ public class Person implements Auditable, Observable, Serializable {
 
     public void setLastUpdateDate(Date lastUpdateDate) {
         this.lastUpdateDate = lastUpdateDate;
+    }
+
+    public MaritalStatus getOriginalMaritalStatus() {
+        return originalMaritalStatus;
+    }
+
+    public void setOriginalMaritalStatus(MaritalStatus originalMaritalStatus) {
+        this.originalMaritalStatus = originalMaritalStatus;
     }
 
     public void registerObserver(Observer observer) {

@@ -8,7 +8,7 @@ public enum MaritalStatus {
 
     SINGLE("single"), MARRIED("married");
 
-    private String label;
+    private final String label;
 
     MaritalStatus(String label) {
         this.label = label;
