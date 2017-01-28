@@ -14,10 +14,6 @@
     <dependencies>
         <dependency>
             <groupId>be.stesch</groupId>
-            <artifactId>person-app-test</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>be.stesch</groupId>
             <artifactId>person-app-common</artifactId>
         </dependency>
     </dependencies>
